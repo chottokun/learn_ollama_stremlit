@@ -23,17 +23,11 @@ msgs = StreamlitChatMessageHistory(key="history")
 from langchain.prompts.chat import (
     ChatPromptTemplate,
     MessagesPlaceholder,
-    SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate,
 )
-
-template = """
-あなたは優秀な話相手です。
-"""
 
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "あなたは優秀なアシスタントです。英語で考え日本語で回答します。"),
+        ("system", "あなたは優秀なアシスタントです。英語で考え、日本語で回答します。"),
         MessagesPlaceholder(variable_name="history"),
         ("human", "{question}"),
     ]
@@ -46,7 +40,7 @@ llm = ChatOllama(
 
 # StreamlitアプリケーションのUI
 st.title("💬 Chatbot")
-st.caption("🚀 A streamlit chatbot")
+st.caption("A streamlit chatbot")
 
 # Chain
 chain = prompt | llm
@@ -64,11 +58,16 @@ for msg in msgs.messages:
 if prompt := st.chat_input():
 
     st.chat_message("human").write(prompt)
-    st_callback = StreamHandler(st.empty())
-    # sessin_id and callbacks
-    config = {"configurable": {"session_id": "any"},
-              "callbacks": [st_callback]
-              }
-    # generate response.
-    response = chain_with_history.invoke({"question": prompt}, config)
-    st.chat_message("ai").write(response.content)
+
+    with st.chat_message("ai"):
+
+        container = st.empty()
+        st_callback = StreamHandler(container)
+        # sessin_id and callbacks
+        config = {"configurable": {"session_id": "any"},
+                "callbacks": [st_callback]
+                }
+        # generate response.
+        response = chain_with_history.invoke({"question": prompt}, config)
+        container.write(response.content)
+
