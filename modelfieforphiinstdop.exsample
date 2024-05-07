@@ -1,0 +1,16 @@
+FROM /home/foobar/ryota39-Phi-3-mini-4k-instruct-dpo-gguf
+
+TEMPLATE """{{ if .System }}<|system|>
+{{ .System }}<|end|>
+{{ end }}{{ if .Prompt }}<|user|>
+{{ .Prompt }}<|end|>
+{{ end }}<|assistant|>
+{{ .Response }}<|end|>
+"""
+
+PARAMETER num_keep 4
+PARAMETER stop "<|user|>"
+PARAMETER stop "<|assistant|>"
+PARAMETER stop "<|system|>"
+PARAMETER stop "<|end|>"
+PARAMETER stop "<|endoftext|>"
