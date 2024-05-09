@@ -7,7 +7,7 @@ Streamlitを使用して構築されたチャットボットアプリケーシ�
 
 ## Ollamaとモデルの準備
 1. 予めモデルをダウンロードして保存する。
-2. モデルファイル作成する。パスは絶対パスでないといけないかも。[sample](//modelfieforphiinstdop.exsample)の「FROM /home/foobar/ryota39-Phi-3-mini-4k-instruct-dpo-gguf」のパスを設定する。
+2. モデルファイル作成する。パスは絶対パスでないといけないかも。[sample](modelfieforphiinstdop.exsample)の「FROM /home/foobar/ryota39-Phi-3-mini-4k-instruct-dpo-gguf」のパスを設定する。
 3. ollama上でモデルを作成する。
 ```
 ollama create ryota39-Phi-3-mini-4k-instruct-dpo-Q4_0.gguf -f modelfile
